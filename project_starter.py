@@ -12,9 +12,16 @@ from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.usage import UsageLimits
 
-# Load OPENAI_API_KEY (and optional OPENAI_MODEL override) from a local .env file.
+# Load OPENAI_API_KEY
 dotenv.load_dotenv()
 os.environ.setdefault("PYDANTIC_AI_NO_BANNER", "1")
+
+# Optional LangSmith tracing: only enabled if LANGSMITH_API_KEY is present in .env.
+if os.getenv("LANGSMITH_API_KEY"):
+    from langsmith.integrations.otel import configure as _configure_langsmith
+
+    _configure_langsmith()  # reads LANGSMITH_API_KEY/PROJECT/AGENT_ID/AGENT_ENVIRONMENT from env
+    Agent.instrument_all()
 
 # Create an SQLite database
 db_engine = create_engine("sqlite:///munder_difflin.db")
@@ -106,20 +113,20 @@ def generate_sample_inventory(paper_supplies: list, coverage: float = 0.4, seed:
     # Ensure reproducible random output
     np.random.seed(seed)
 
-    # Calculate number of items to include based on coverage
+    # Calculate number of items
     num_items = int(len(paper_supplies) * coverage)
 
-    # Randomly select item indices without replacement
+    # Randomly select item indices
     selected_indices = np.random.choice(
         range(len(paper_supplies)),
         size=num_items,
         replace=False
     )
 
-    # Extract selected items from paper_supplies list
+    # Extract selected items from paper_supplies
     selected_items = [paper_supplies[i] for i in selected_indices]
 
-    # Construct inventory records
+    #  inventory records
     inventory = []
     for item in selected_items:
         inventory.append({
@@ -130,7 +137,7 @@ def generate_sample_inventory(paper_supplies: list, coverage: float = 0.4, seed:
             "min_stock_level": np.random.randint(50, 150)  # Reasonable threshold for reordering
         })
 
-    # Return inventory as a pandas DataFrame
+    # Return inventory as pandas DataFrame
     return pd.DataFrame(inventory)
 
 def init_database(db_engine: Engine, seed: int = 137) -> Engine:    
@@ -272,10 +279,10 @@ def create_transaction(
         Exception: For other database or execution errors.
     """
     try:
-        # Convert datetime to ISO string if necessary
+        # Convert datetime to ISO string
         date_str = date.isoformat() if isinstance(date, datetime) else date
 
-        # Validate transaction type
+        # Validate transactiontype
         if transaction_type not in {"stock_orders", "sales"}:
             raise ValueError("Transaction type must be 'stock_orders' or 'sales'")
 
@@ -288,10 +295,10 @@ def create_transaction(
             "transaction_date": date_str,
         }])
 
-        # Insert the record into the database
+        # Insert the record into database
         transaction.to_sql("transactions", db_engine, if_exists="append", index=False)
 
-        # Fetch and return the ID of the inserted row
+        # Fetch ID of inserted row
         result = pd.read_sql("SELECT last_insert_rowid() as id", db_engine)
         return int(result.iloc[0]["id"])
 
@@ -314,7 +321,7 @@ def get_all_inventory(as_of_date: str) -> Dict[str, int]:
     Returns:
         Dict[str, int]: A dictionary mapping item names to their current stock levels.
     """
-    # SQL query to compute stock levels per item as of the given date
+    # SQL query to compute stock levels per item
     query = """
         SELECT
             item_name,
@@ -330,10 +337,10 @@ def get_all_inventory(as_of_date: str) -> Dict[str, int]:
         HAVING stock > 0
     """
 
-    # Execute the query with the date parameter
+    # Execute the query with date parameter
     result = pd.read_sql(query, db_engine, params={"as_of_date": as_of_date})
 
-    # Convert the result into a dictionary {item_name: stock}
+    # Convert the result into a dictionary
     return dict(zip(result["item_name"], result["stock"]))
 
 def get_stock_level(item_name: str, as_of_date: Union[str, datetime]) -> pd.DataFrame:
@@ -350,11 +357,11 @@ def get_stock_level(item_name: str, as_of_date: Union[str, datetime]) -> pd.Data
     Returns:
         pd.DataFrame: A single-row DataFrame with columns 'item_name' and 'current_stock'.
     """
-    # Convert date to ISO string format if it's a datetime object
+    # Convert date to ISO string format
     if isinstance(as_of_date, datetime):
         as_of_date = as_of_date.isoformat()
 
-    # SQL query to compute net stock level for the item
+    # SQL query to compute net stock level
     stock_query = """
         SELECT
             item_name,
@@ -368,7 +375,7 @@ def get_stock_level(item_name: str, as_of_date: Union[str, datetime]) -> pd.Data
         AND transaction_date <= :as_of_date
     """
 
-    # Execute query and return result as a DataFrame
+    # Execute query and return result as DataFrame
     return pd.read_sql(
         stock_query,
         db_engine,
@@ -392,14 +399,14 @@ def get_supplier_delivery_date(input_date_str: str, quantity: int) -> str:
     Returns:
         str: Estimated delivery date in ISO format (YYYY-MM-DD).
     """
-    # Debug log (comment out in production if needed)
+    # Debug log
     print(f"FUNC (get_supplier_delivery_date): Calculating for qty {quantity} from date string '{input_date_str}'")
 
-    # Attempt to parse the input date
+    # parse the input date
     try:
         input_date_dt = datetime.fromisoformat(input_date_str.split("T")[0])
     except (ValueError, TypeError):
-        # Fallback to current date on format error
+        # Fallback to current date on error
         print(f"WARN (get_supplier_delivery_date): Invalid date format '{input_date_str}', using today as base.")
         input_date_dt = datetime.now()
 
@@ -839,8 +846,6 @@ async def call_sales_agent(
     requested_delivery_date: Optional[str],
     as_of_date: str,
 ) -> SalesDecision:
-    # Delivery-date feasibility is simple date comparison -- compute it in Python rather
-    # than trusting the LLM to get 70 date comparisons right.
     on_time = True
     if requested_delivery_date:
         on_time = all(item.available_by <= requested_delivery_date for item in availability.items)
@@ -968,8 +973,6 @@ def run_test_scenarios():
     current_cash = report["cash_balance"]
     current_inventory = report["inventory_value"]
 
-    # The multi-agent system is module-level (inventory_agent, quoting_agent, sales_agent,
-    # orchestrator_agent) and ready to use via handle_customer_request().
 
     results = []
     for idx, row in quote_requests_sample.iterrows():
