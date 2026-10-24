@@ -1,0 +1,43 @@
+request_id,request_date,cash_balance,inventory_value,fulfilled,response
+1,2025-04-01,45121.45,4875.3,True,"Thank you for your order of paper supplies for your upcoming ceremony! Here’s a breakdown of what you ordered:
+
+- **Glossy paper**: 200 sheets  
+- **Cardstock**: 100 sheets  
+- **Colored paper**: 100 sheets  
+
+Your subtotal comes to **$65.00**. Since you ordered in bulk, we’re pleased to offer you a **5% discount**, bringing your total to **$61.75**. We appreciate your business and hope your ceremony is a great success!"
+2,2025-04-03,45121.45,4875.3,False,"Unfortunately, we don't carry balloons or rolls of streamers in our catalog. However, we do have colorful poster paper available."
+3,2025-04-04,45121.45,4875.3,False,"Unfortunately, we don't carry A3 paper or printer paper in our catalog. However, we can fulfill your request for A4 paper."
+4,2025-04-05,45128.7,4862.8,True,"Thank you for your order! For your reception, you have selected the following paper supplies:
+
+- 500 sheets of Recycled paper
+- 250 sheets of A4 paper
+
+Your subtotal comes to $52.50. Since this is a bulk order, we are pleased to offer you a 10% discount, bringing your total to $47.25. We appreciate your business and hope your event is a great success!"
+5,2025-04-05,45213.0,4769.0,True,"Thank you for your order! For your upcoming party, you've selected 500 sheets of colored paper and 300 sheets of cardstock. We’re pleased to offer you a 10% discount on your order due to the quantity purchased. Your subtotal was $95.00, and after applying the discount, your total comes to $85.50. We hope these materials help make your event a success!"
+6,2025-04-06,45182.5,4799.5,False,"Unfortunately, we cannot fulfill your order as we currently have insufficient stock of cardstock and cannot provide it at an affordable price. Additionally, we do not carry white printer paper."
+7,2025-04-07,45524.65,4392.85,True,"Thank you for your order! We're excited to support your upcoming exhibition with our high-quality paper supplies. Here’s a breakdown of what you ordered:
+
+- **Glossy paper**: 500 sheets
+- **Large poster paper (24x36 inches)**: 300 sheets
+- **Cardstock**: 200 sheets
+
+Your subtotal comes to **$430.00**. Since this is a large order, we've applied a **15% discount**, bringing your total to **$365.50**. We appreciate your business and look forward to helping make your exhibition a success!"
+8,2025-04-07,45004.65,4492.85,False,"Thank you for your order request! Unfortunately, we cannot fulfill your request for matte paper and recycled paper due to insufficient stock for reorder. If you would like to adjust your order or choose alternative items, please let us know!"
+9,2025-04-07,45010.0,4486.75,True,Thank you for your order! You've selected 200 sheets of A4 paper and 50 packets of Kraft paper for your reception. Your total comes to $14.25 after a 5% discount for the quantity purchased. We appreciate your business and hope your event is a great success!
+13,2025-04-08,44955.0,4541.75,False,"Unfortunately, we cannot fulfill your order as the cardstock cannot be delivered by the requested date of April 10, 2025; it will be available by April 12, 2025."
+12,2025-04-08,44970.8,4521.75,True,"Thank you for your order! You've selected a wonderful assortment of supplies for your upcoming party, including 200 sheets of colored paper, 500 sheets of standard copy paper, and 100 paper napkins. To help you with your event, we've applied a 10% discount on your order due to the quantity purchased. Your subtotal was $42.00, and with the discount, your total comes to $37.80. We hope your party is a great success!"
+10,2025-04-08,45056.3,4421.75,True,"Thank you for your order! For your upcoming show, you've selected 500 sheets of Glossy paper and 300 sheets of Cardstock. We’re pleased to offer you a 10% discount on your order due to the quantity purchased. Your subtotal was $145.00, and after applying the discount, your total comes to $130.50. We appreciate your business and wish you great success at your event!"
+11,2025-04-08,45059.8,4406.75,True,"Thank you for your order for the exhibition! You have selected 500 sheets of Glossy paper and 300 sheets of A4 paper. We are pleased to offer you a 10% discount on your order due to the quantity purchased. Your subtotal was $115.00, and after applying the discount, your total comes to $103.50. We appreciate your business and wish you great success at the exhibition!"
+14,2025-04-09,44274.8,4691.75,False,"Unfortunately, we cannot fulfill your order as the poster paper cannot be delivered by the requested date of April 15, 2025; it will be available only by April 16, 2025."
+15,2025-04-12,43774.8,5191.749999999999,False,"Thank you for your request! Unfortunately, we cannot fulfill your order as we currently have insufficient stock for A4 paper and the colored paper is not available by your requested delivery date."
+16,2025-04-13,43815.3,5146.749999999999,True,"Thank you for your order! You've selected 500 sheets of A4 paper and 200 sheets of colored paper for your assembly event. We're pleased to offer you a 10% discount on your order due to the quantity purchased. Your subtotal was $45.00, and after applying the discount, your total comes to $40.50. We appreciate your business and hope your event is a great success!"
+17,2025-04-14,43695.3,5146.749999999999,False,"Thank you for your order request! Unfortunately, we cannot fulfill your request for paper plates due to insufficient stock and affordability issues. If you would like to adjust your order or inquire about other items, please let us know!"
+18,2025-04-14,43580.3,5221.749999999999,False,"Unfortunately, we cannot fulfill your order as the standard printing paper cannot be delivered by your requested date of April 15, 2025; it will be available by April 18, 2025."
+19,2025-04-15,43180.3,5621.749999999999,False,"Thank you for your order request! Unfortunately, we cannot fulfill your request for glossy paper by the requested delivery date of April 20, 2025, as it will only be available by April 22, 2025. Please let us know if you would like to adjust your order."
+20,2025-04-17,43492.8,5621.749999999999,True,"Thank you for your order! We are excited to provide you with the paper supplies for your upcoming concert. Your order includes:
+
+- 5000 Flyers
+- 2000 Poster papers
+
+Given the large quantity of your order, we are pleased to offer you a 15% discount, bringing your total from $1250.00 down to $1062.50. We appreciate your business and look forward to supporting your event!"
