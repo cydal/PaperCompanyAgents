@@ -1,0 +1,51 @@
+flowchart TD
+    Customer["Customer Request"]
+
+    subgraph ORCH["Orchestrator Agent"]
+        direction TB
+        O1["parse_request"]
+        O2["call_inventory_agent"]
+        O3["call_quoting_agent"]
+        O4["call_sales_agent"]
+    end
+
+    subgraph INV["Inventory Agent"]
+        direction TB
+        I1["check_stock<br/><small>get_stock_level, get_all_inventory</small>"]
+        I2["estimate_delivery<br/><small>get_supplier_delivery_date</small>"]
+        I3["check_cash<br/><small>get_cash_balance</small>"]
+        I4["reorder_stock<br/><small>create_transaction</small>"]
+    end
+
+    subgraph QUOTE["Quoting Agent"]
+        direction TB
+        Q1["lookup_price<br/><small>paper_supplies</small>"]
+        Q2["find_similar_quotes<br/><small>search_quote_history</small>"]
+        Q3["apply_discount"]
+    end
+
+    subgraph SALES["Sales Agent"]
+        direction TB
+        S1["check_feasibility"]
+        S2["financial_health_check<br/><small>generate_financial_report</small>"]
+        S3["finalize_or_reject<br/><small>create_transaction</small>"]
+    end
+
+    DB[("SQLite DB")]
+
+    Customer -->|"request + date"| O1 --> O2
+    O2 --> I1 --> I2 --> I3 --> I4
+    I1 -.-> DB
+    I2 -.-> DB
+    I3 -.-> DB
+    I4 -.-> DB
+    I4 -->|"availability"| O2 --> O3
+    O3 --> Q1 --> Q2 --> Q3
+    Q1 -.-> DB
+    Q2 -.-> DB
+    Q3 -->|"quote"| O3 --> O4
+    O4 --> S1 --> S2 --> S3
+    S2 -.-> DB
+    S3 -.-> DB
+    S3 -->|"confirm / reject"| O4
+    O4 -->|"response"| Customer
