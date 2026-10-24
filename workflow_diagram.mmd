@@ -4,9 +4,7 @@ flowchart TD
     subgraph ORCH["Orchestrator Agent"]
         direction TB
         O1["parse_request"]
-        O2["call_inventory_agent"]
-        O3["call_quoting_agent"]
-        O4["call_sales_agent"]
+        O2["process_order"]
     end
 
     subgraph INV["Inventory Agent"]
@@ -39,13 +37,13 @@ flowchart TD
     I2 -.-> DB
     I3 -.-> DB
     I4 -.-> DB
-    I4 -->|"availability"| O2 --> O3
-    O3 --> Q1 --> Q2 --> Q3
+    I4 -->|"availability"| O2
+    O2 --> Q1 --> Q2 --> Q3
     Q1 -.-> DB
     Q2 -.-> DB
-    Q3 -->|"quote"| O3 --> O4
-    O4 --> S1 --> S2 --> S3
+    Q3 -->|"quote"| O2
+    O2 --> S1 --> S2 --> S3
     S2 -.-> DB
     S3 -.-> DB
-    S3 -->|"confirm / reject"| O4
-    O4 -->|"response"| Customer
+    S3 -->|"confirm / reject"| O2
+    O2 -->|"response"| Customer
