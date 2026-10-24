@@ -25,8 +25,8 @@ three workers agents: (inventory, quoting, sales) with no overlapping responsibi
   `get_supplier_delivery_date`, `get_cash_balance`, and `create_transaction` for `stock_orders`.
 - **Quoting Agent** — answers "what should this cost?" Owns
   `search_quote_history` for discount calibration against similar past
-  orders; the actual price and discount are computed deterministically and the agent's job is to explain them to the customer.
-- **Sales Agent** — the final gate. Answers "can we actually commit to this?"
+  orders.
+- **Sales Agent** — answers "can we actually commit to this?"
   Owns `generate_financial_report` and
   `create_transaction` for `sales`. Decides fulfill-or-reject and writes the reason when rejecting.
 
@@ -60,10 +60,9 @@ computed in plain Python, and handed to the agents as given facts:
 1. **Pricing and discount tier** (`price_line_items`, `discount_tier`) — a
    fixed quantity-based schedule (≥1000 units → 15%, ≥500 → 10%, ≥100 → 5%,
    else 0%). 
-2. **Delivery-deadline feasibility** — comparing each item's `available_by`
-   date against the customer's requested delivery date is plain string
-   comparison, done once in Python and passed to the Sales Agent as a
-   precomputed `on_time` boolean.
+2. **Delivery-deadline feasibility** — each item's `available_by`
+   date is compared against the customer's requested delivery date using plain string
+   comparison.
 
 ### 2.4 Catalog matching: a real failure found during testing
 
