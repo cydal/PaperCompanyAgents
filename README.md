@@ -80,7 +80,7 @@ Sample results from 20 test requests (10 fulfilled, 10 rejected):
 - **Atomic fulfillment** — Entire order accepted or rejected; no partial orders
 - **Clear rejection reasons** — Specific item + cause (stock, delivery date, not in catalog)
 - **Inventory reordering** — Inventory Agent restocks proactively when affordable
-- **LangSmith tracing** — Optional observability via OpenTelemetry (enable with `LANGSMITH_API_KEY` in `.env`)
+- **LangSmith tracing** — Optional observability via OpenTelemetry (enable with `LANGSMITH_API_KEY` in `.env`) - [click here to view traces](https://smith.langchain.com/o/55f93082-44ef-4f73-8c31-5def517fa237/a/paperagent/projects/p/01a16f7a-8627-799d-b328-16d93c1901ef?peek=00000000-0000-0000-c848-845f3b86c943&peeked_trace=00000000-0000-0000-c848-845f3b86c943&start_time=2026-10-24T20%3A16%3A22.920877Z&peek_project=01a16f7a-8627-799d-b328-16d93c1901ef&peekedConversationId=01a16f8e-a97c-744a-afdd-9e16c277b4f1&trace_id=00000000-0000-0000-c848-845f3b86c943&run_id=00000000-0000-0000-c848-845f3b86c943):
 
 ## Project Files
 
